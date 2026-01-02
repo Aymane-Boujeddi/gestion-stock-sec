@@ -1,0 +1,1083 @@
+{
+	"info": {
+		"_postman_id": "8c5dde04-8164-472a-b4bd-818999abe357",
+		"name": "Gestion du Stock - Organized",
+		"description": "Complete API collection for Stock Management System with dual authentication (JWT + OAuth2/Keycloak)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42982060"
+	},
+	"item": [
+		{
+			"name": "🔐 Authentication",
+			"description": "Authentication endpoints for login and registration",
+			"item": [
+				{
+					"name": "Login (Local JWT)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						},
+						"description": "Login with username/password. Returns JWT token for subsequent requests."
+					},
+					"response": []
+				},
+				{
+					"name": "Register New User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"newuser\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						},
+						"description": "Register a new user account"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "👥 User Management",
+			"description": "Endpoints for managing users, roles, and permissions",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["users"]
+						},
+						"description": "Requires: USER_MANAGE permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Permissions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/1/permissions",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "1", "permissions"]
+						},
+						"description": "Requires: USER_MANAGE permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Role to User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1,\n  \"roleId\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/assign-role",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "assign-role"]
+						},
+						"description": "Requires: ROLE_ASSIGN permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Modify User Permission",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1,\n  \"permissionId\": 5,\n  \"action\": \"ADD\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/modify-permission",
+							"host": ["{{baseUrl}}"],
+							"path": ["users", "modify-permission"]
+						},
+						"description": "Requires: PERMISSION_MANAGE permission. Action can be ADD or REMOVE"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📋 Audit Logs",
+			"description": "Audit trail and user activity tracking",
+			"item": [
+				{
+					"name": "Get Recent Audits",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/audits/recent?limit=100",
+							"host": ["{{baseUrl}}"],
+							"path": ["audits", "recent"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								}
+							]
+						},
+						"description": "Requires: AUDIT_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User History by Username",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/audits/user/admin",
+							"host": ["{{baseUrl}}"],
+							"path": ["audits", "user", "admin"]
+						},
+						"description": "Requires: AUDIT_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User History by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/audits/user-id/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["audits", "user-id", "1"]
+						},
+						"description": "Requires: AUDIT_READ permission"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🏢 Fournisseurs (Suppliers)",
+			"description": "CRUD operations for suppliers management",
+			"item": [
+				{
+					"name": "Create Fournisseur",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"Fournisseur Test\",\n  \"adresse\": \"123 Rue Test, Casablanca\",\n  \"personneContact\": \"Ahmed Alami\",\n  \"email\": \"test@fournisseur.com\",\n  \"telephone\": \"0612345678\",\n  \"ville\": \"Casablanca\",\n  \"raisonSociale\": \"Test SARL\",\n  \"ICE\": \"123456789012345\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/fournisseurs",
+							"host": ["{{baseUrl}}"],
+							"path": ["fournisseurs"]
+						},
+						"description": "Requires: FOURNISSEUR_CREATE permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Fournisseurs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/fournisseurs",
+							"host": ["{{baseUrl}}"],
+							"path": ["fournisseurs"]
+						},
+						"description": "Requires: FOURNISSEUR_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Fournisseur by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/fournisseurs/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["fournisseurs", "1"]
+						},
+						"description": "Requires: FOURNISSEUR_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Fournisseur",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"Fournisseur Updated\",\n  \"adresse\": \"123 Test Street Updated\",\n  \"personneContact\": \"John Doe\",\n  \"email\": \"updated@example.com\",\n  \"telephone\": \"0123456789\",\n  \"ville\": \"Casablanca\",\n  \"raisonSociale\": \"Updated SARL\",\n  \"ICE\": \"123456789012345\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/fournisseurs/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["fournisseurs", "1"]
+						},
+						"description": "Requires: FOURNISSEUR_UPDATE permission"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📦 Produits (Products)",
+			"description": "CRUD operations for products management",
+			"item": [
+				{
+					"name": "Create Produit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reference\": \"PROD001\",\n  \"nom\": \"Product Test\",\n  \"description\": \"Test product description\",\n  \"prixUnitaire\": 150.00,\n  \"categorie\": \"Electronics\",\n  \"pointCommande\": 10,\n  \"uniteMesure\": \"Unit\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/produits",
+							"host": ["{{baseUrl}}"],
+							"path": ["produits"]
+						},
+						"description": "Requires: PRODUIT_CREATE permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Produits",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produits",
+							"host": ["{{baseUrl}}"],
+							"path": ["produits"]
+						},
+						"description": "Requires: PRODUIT_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Produit by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produits/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["produits", "1"]
+						},
+						"description": "Requires: PRODUIT_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Produit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reference\": \"PROD001\",\n  \"nom\": \"Product Updated\",\n  \"description\": \"Updated description\",\n  \"prixUnitaire\": 175.00,\n  \"categorie\": \"Electronics\",\n  \"pointCommande\": 15,\n  \"uniteMesure\": \"Unit\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/produits/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["produits", "1"]
+						},
+						"description": "Requires: PRODUIT_UPDATE permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Produit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produits/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["produits", "1"]
+						},
+						"description": "Requires: PRODUIT_DELETE permission"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🛒 Commandes (Orders)",
+			"description": "Order management with supplier orders and stock reception",
+			"item": [
+				{
+					"name": "Create Commande with Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fournisseurId\": 1,\n  \"statutCommande\": \"EN_ATTENTE\",\n  \"detailsCommande\": [\n    {\n      \"produitId\": 1,\n      \"quantite\": 100,\n      \"prix\": 200.00\n    },\n    {\n      \"produitId\": 2,\n      \"quantite\": 50,\n      \"prix\": 150.00\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/commandes",
+							"host": ["{{baseUrl}}"],
+							"path": ["commandes"]
+						},
+						"description": "Requires: COMMANDE_CREATE permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Commandes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commandes",
+							"host": ["{{baseUrl}}"],
+							"path": ["commandes"]
+						},
+						"description": "Requires: COMMANDE_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Commande by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commandes/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["commandes", "1"]
+						},
+						"description": "Requires: COMMANDE_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Commande",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fournisseurId\": 1,\n  \"statutCommande\": \"EN_ATTENTE\",\n  \"detailsCommande\": [\n    {\n      \"id\": 1,\n      \"produitId\": 1,\n      \"quantite\": 150,\n      \"prix\": 200.00\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/commandes/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["commandes", "1"]
+						},
+						"description": "Requires: COMMANDE_UPDATE permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Commande",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commandes/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["commandes", "1"]
+						},
+						"description": "Requires: COMMANDE_UPDATE permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Commande as Annulée",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commandes/1/annulee",
+							"host": ["{{baseUrl}}"],
+							"path": ["commandes", "1", "annulee"]
+						},
+						"description": "Requires: COMMANDE_CANCEL permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Commande as Livrée (Receive Stock)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commandes/1/livree",
+							"host": ["{{baseUrl}}"],
+							"path": ["commandes", "1", "livree"]
+						},
+						"description": "Requires: COMMANDE_RECEPTION permission. Creates stock entries using FIFO."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Commandes by Fournisseur ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commandes/1/fournisseur",
+							"host": ["{{baseUrl}}"],
+							"path": ["commandes", "1", "fournisseur"]
+						},
+						"description": "Requires: COMMANDE_READ permission"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📤 Bons de Sortie (Exit Slips)",
+			"description": "Stock exit management for production, sales, and other purposes",
+			"item": [
+				{
+					"name": "Create Bon de Sortie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"atelier\": \"Atelier Production A\",\n  \"motif\": \"PRODUCTION\",\n  \"motifDetails\": \"Production urgente pour commande client\",\n  \"items\": [\n    {\n      \"produitId\": 1,\n      \"quantite\": 50\n    },\n    {\n      \"produitId\": 2,\n      \"quantite\": 30\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bonsSortie",
+							"host": ["{{baseUrl}}"],
+							"path": ["bonsSortie"]
+						},
+						"description": "Requires: BON_SORTIE_CREATE permission. Motif can be: PRODUCTION, VENTE, TRANSFERT, RETOUR, PERTE, AUTRE"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Bons de Sortie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bonsSortie",
+							"host": ["{{baseUrl}}"],
+							"path": ["bonsSortie"]
+						},
+						"description": "Requires: BON_SORTIE_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bon de Sortie by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bonsSortie/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["bonsSortie", "1"]
+						},
+						"description": "Requires: BON_SORTIE_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Bon de Sortie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"atelier\": \"Atelier Production B\",\n  \"motif\": \"PRODUCTION\",\n  \"motifDetails\": \"Updated production details\",\n  \"items\": [\n    {\n      \"produitId\": 1,\n      \"quantite\": 75\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bonsSortie/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["bonsSortie", "1"]
+						},
+						"description": "Requires: BON_SORTIE_CREATE permission. Only works if status is EN_ATTENTE"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Bon de Sortie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bonsSortie/1/annuler",
+							"host": ["{{baseUrl}}"],
+							"path": ["bonsSortie", "1", "annuler"]
+						},
+						"description": "Requires: BON_SORTIE_CANCEL permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Bon de Sortie (Process Exit)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bonsSortie/1/valider",
+							"host": ["{{baseUrl}}"],
+							"path": ["bonsSortie", "1", "valider"]
+						},
+						"description": "Requires: BON_SORTIE_VALIDATE permission. Deducts stock using FIFO and creates mouvement records."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📊 Stock Management",
+			"description": "Stock tracking, FIFO inventory, and movement history",
+			"item": [
+				{
+					"name": "Get All Stock",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stock",
+							"host": ["{{baseUrl}}"],
+							"path": ["stock"]
+						},
+						"description": "Requires: STOCK_READ permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stock Details by Product (FIFO)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stock/produit/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["stock", "produit", "1"]
+						},
+						"description": "Requires: STOCK_VIEW_FIFO permission. Shows FIFO-sorted stock batches for a product."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Stock Movements (History)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stock/mouvements",
+							"host": ["{{baseUrl}}"],
+							"path": ["stock", "mouvements"]
+						},
+						"description": "Requires: STOCK_VIEW_HISTORY permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Movement History",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stock/mouvements/produit/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["stock", "mouvements", "produit", "1"]
+						},
+						"description": "Requires: STOCK_VIEW_HISTORY permission"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products Under Threshold (Alerts)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stock/alertes",
+							"host": ["{{baseUrl}}"],
+							"path": ["stock", "alertes"]
+						},
+						"description": "Requires: PRODUIT_CONFIGURE_ALERT permission. Returns products below their reorder point."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stock Valorisation (Total Value)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stock/valorisation",
+							"host": ["{{baseUrl}}"],
+							"path": ["stock", "valorisation"]
+						},
+						"description": "Returns total stock value (sum of price * quantity for all products)"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/gestionStock/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "keycloak_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
+

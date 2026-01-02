@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user-permissions-table
+      author: security-team
+      changes:
+        - createTable:
+            tableName: user_permissions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_permission_user
+                    references: users(id)
+              - column:
+                  name: permission_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_permission_permission
+                    references: permissions(id)
+              - column:
+                  name: granted
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable:
+            tableName: user_permissions

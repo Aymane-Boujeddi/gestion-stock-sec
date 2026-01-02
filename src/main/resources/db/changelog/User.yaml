@@ -1,0 +1,92 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-table
+      author: security-team
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_user_role
+                    references: role_apps(id)
+      rollback:
+        - dropTable:
+            tableName: users
+
+  - changeSet:
+      id: update-users-table-for-oauth-keycloak
+      author: dev-jazz
+      changes:
+        - dropNotNullConstraint:
+            tableName: users
+            columnName: password
+            columnDataType: VARCHAR(255)
+
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: auth_provider
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+                  defaultValue: LOCAL
+
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: external_subject
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+                    unique: true
+
+      rollback:
+        - dropColumn:
+            tableName: users
+            columnName: external_subject
+        - dropColumn:
+            tableName: users
+            columnName: auth_provider
+        - addNotNullConstraint:
+            tableName: users
+            columnName: password
+            columnDataType: VARCHAR(255)
+
+  - changeSet:
+      id: rename-external-subject-to-client-id-sub
+      author: dev-jazz
+      changes:
+        - renameColumn:
+            tableName: users
+            oldColumnName: external_subject
+            newColumnName: client_id_sub
+            columnDataType: VARCHAR(255)
+      rollback:
+        - renameColumn:
+            tableName: users
+            oldColumnName: client_id_sub
+            newColumnName: external_subject
+            columnDataType: VARCHAR(255)

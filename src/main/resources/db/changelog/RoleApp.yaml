@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-role-apps-table
+      author: security-team
+      changes:
+        - createTable:
+            tableName: role_apps
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+      rollback:
+        - dropTable:
+            tableName: role_apps
+
+  - changeSet:
+      id: insert-default-roles
+      author: security-team
+      changes:
+        - insert:
+            tableName: role_apps
+            columns:
+              - column:
+                  name: name
+                  value: ADMIN
+        - insert:
+            tableName: role_apps
+            columns:
+              - column:
+                  name: name
+                  value: MAGASINIER
+        - insert:
+            tableName: role_apps
+            columns:
+              - column:
+                  name: name
+                  value: CHEF_ATELIER
+        - insert:
+            tableName: role_apps
+            columns:
+              - column:
+                  name: name
+                  value: RESPONSABLE_ACHAT
+      rollback:
+        - delete:
+            tableName: role_apps

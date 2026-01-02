@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <include file="db/changelog/Fournisseurs.xml" />
+    <include file="db/changelog/Produit.xml" />
+    <include file="db/changelog/Commande.yaml"/>
+    <include file="db/changelog/DetailsCommande.yaml"/>
+    <include file="db/changelog/Stock.yaml"/>
+    <include file="db/changelog/MouvementStocks.yaml"/>
+    <include file="db/changelog/BonSortie.yaml"/>
+    <include file="db/changelog/BonSortieItem.yaml"/>
+    <include file="db/changelog/RoleApp.yaml"/>
+    <include file="db/changelog/Permission.yaml"/>
+    <include file="db/changelog/RoleDefaultPermissions.yaml"/>
+    <include file="db/changelog/User.yaml"/>
+    <include file="db/changelog/UserPermission.yaml"/>
+    <include file="db/changelog/Audit.yaml"/>
+
+</databaseChangeLog>

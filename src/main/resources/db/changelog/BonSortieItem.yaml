@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-bons-sortie-details
+      author: hajar
+      changes:
+        - createTable:
+            tableName: bons_sortie_details
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT AUTO_INCREMENT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: quantite
+                  type: INT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: produit_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: bon_sortie_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            constraintName: fk_bon_sortie_details_produit
+            baseTableName: bons_sortie_details
+            baseColumnNames: produit_id
+            referencedTableName: produits
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            constraintName: fk_bon_sortie_details_bon_sortie
+            baseTableName: bons_sortie_details
+            baseColumnNames: bon_sortie_id
+            referencedTableName: bons_sortie
+            referencedColumnNames: id
+            onDelete: CASCADE

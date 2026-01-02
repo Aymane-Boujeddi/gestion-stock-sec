@@ -1,0 +1,781 @@
+{
+	"info": {
+		"_postman_id": "8c5dde04-8164-472a-b4bd-818999abe357",
+		"name": "Gestion du stock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42982060"
+	},
+	"item": [
+		{
+			"name": "Get one Fournisseur request",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nom\": \"Fournisseur Test\",\r\n  \"adresse\": \"123 Rue Test, Casablanca\",\r\n  \"personneContact\": \"Ahmed Alami\",\r\n  \"email\": \"test@fournisseur.com\",\r\n  \"telephone\": \"0612345678\",\r\n  \"ville\": \"Casablanca\",\r\n  \"raisonSociale\": \"Test SARL\",\r\n  \"ICE\": \"123456789012345\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/fournisseurs/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"fournisseurs",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Fournisseur request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nom\": \"Test Fournisseur 2\",\r\n  \"adresse\": \"123 Test Street\",\r\n  \"personneContact\": \"John Doe\",\r\n  \"email\": \"test1@example.com\",\r\n  \"telephone\": \"0123456782\",\r\n  \"ville\": \"Casablanca\",\r\n  \"raisonSociale\": \"Test SARL\",\r\n  \"ICE\": \"123456789012349\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/fournisseurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"fournisseurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Fournisseurs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nom\": \"Test Fournisseur 2\",\r\n  \"adresse\": \"123 Test Street\",\r\n  \"personneContact\": \"John Doe\",\r\n  \"email\": \"test1@example.com\",\r\n  \"telephone\": \"0123456782\",\r\n  \"ville\": \"Casablanca\",\r\n  \"raisonSociale\": \"Test SARL\",\r\n  \"ICE\": \"123456789012349\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/fournisseurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"fournisseurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Fournisseur",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nom\": \"Test Fournisseur 2\",\r\n  \"adresse\": \"123 Test Streets\",\r\n  \"personneContact\": \"John Doe\",\r\n  \"email\": \"test1@example.com\",\r\n  \"telephone\": \"0123456782\",\r\n  \"ville\": \"Casablanca\",\r\n  \"raisonSociale\": \"Test SARL ycoder\",\r\n  \"ICE\": \"123456789012349\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/fournisseurs/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"fournisseurs",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Commande with DetailsCommande",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fournisseurId\": 1,\r\n  \"statutCommande\": \"EN_ATTENTE\",\r\n  \"detailsCommande\": [\r\n    {\r\n      \"produitId\": 1,\r\n      \"quantite\": 2,\r\n      \"prix\": 200\r\n    },\r\n    {\r\n      \"produitId\": 2,\r\n      \"quantite\": 50,\r\n      \"prix\": 2.50\r\n    },\r\n    {\r\n      \"produitId\": 3,\r\n      \"quantite\": 20,\r\n      \"prix\": 150\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/commandes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"commandes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Commandes with detailsCommande",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"reference\": \"CHAIR001\",\r\n  \"nom\": \"Ergonomic Office Chair\",\r\n  \"description\": \"Adjustable height office chair with lumbar support\",\r\n  \"prixUnitaire\": 299.00,\r\n  \"categorie\": \"Furniture\",\r\n  \"stockActuel\": 8,\r\n  \"pointCommande\": 3,\r\n  \"uniteMesure\": \"Unit\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/commandes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"commandes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get one Commande",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"reference\": \"CHAIR001\",\r\n  \"nom\": \"Ergonomic Office Chair\",\r\n  \"description\": \"Adjustable height office chair with lumbar support\",\r\n  \"prixUnitaire\": 299.00,\r\n  \"categorie\": \"Furniture\",\r\n  \"stockActuel\": 8,\r\n  \"pointCommande\": 3,\r\n  \"uniteMesure\": \"Unit\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/commandes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"commandes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Commande and DetailsCommande",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"fournisseurId\": 1,\r\n    \"statutCommande\": \"ANNULEE\",\r\n    \"detailsCommande\": [\r\n        {\r\n            \"id\": 1,\r\n            \"produitId\": 3,\r\n            \"quantite\": 10,\r\n            \"prix\" : 100\r\n        }\r\n    ]\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/commandes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"commandes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Produit with ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/produits/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"produits",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Commande by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/commandes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"commandes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Commande to Livrée",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"reference\": \"CHAIR001\",\r\n  \"nom\": \"Ergonomic Office Chair\",\r\n  \"description\": \"Adjustable height office chair with lumbar support\",\r\n  \"prixUnitaire\": 299.00,\r\n  \"categorie\": \"Furniture\",\r\n  \"stockActuel\": 8,\r\n  \"pointCommande\": 3,\r\n  \"uniteMesure\": \"Unit\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/commandes/3/livree",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"commandes",
+						"3",
+						"livree"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get commandes for one fournisseur by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/commandes/2/fournisseur",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"commandes",
+						"2",
+						"fournisseur"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get details Stock du Produit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/stock/produit/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"stock",
+						"produit",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Historique mouvement (ALL)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/stock/mouvements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"stock",
+						"mouvements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Historique Mouvement Produit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/stock/mouvements/produit/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"stock",
+						"mouvements",
+						"produit",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produits sous le seuil minimum",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/stock/alertes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"stock",
+						"alertes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Valorisation du Stock  somme  -> (produit prix * produit quantite)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/stock/valorisation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"stock",
+						"valorisation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bon Sortie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"atelier\": \"Atelier Production A\",\r\n  \"motif\": \"PRODUCTION\",\r\n  \"motifDetails\": \"Production urgente pour commande client\",\r\n  \"items\": [\r\n    {\r\n      \"produitId\": 1,\r\n      \"quantite\": 50\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/bonsSortie",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"bonsSortie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all BonSortie",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"atelier\": \"Atelier Production A\",\r\n  \"motif\": \"PRODUCTION\",\r\n  \"motifDetails\": \"Production urgente pour commande client\",\r\n  \"items\": [\r\n    {\r\n      \"produitId\": 1,\r\n      \"quantite\": 50\r\n    }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/bonsSortie",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"bonsSortie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get one BonSortie",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"atelier\": \"Atelier Production A\",\r\n  \"motif\": \"PRODUCTION\",\r\n  \"motifDetails\": \"Production urgente pour commande client\",\r\n  \"items\": [\r\n    {\r\n      \"produitId\": 1,\r\n      \"quantite\": 50\r\n    }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/bonsSortie/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"bonsSortie",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update PUT BonSortie status to ANNULE",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"atelier\": \"Atelier Production A\",\r\n  \"motif\": \"PRODUCTION\",\r\n  \"motifDetails\": \"Production urgente pour commande client\",\r\n  \"items\": [\r\n    {\r\n      \"produitId\": 1,\r\n      \"quantite\": 50\r\n    }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/bonsSortie/2/annuler",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"bonsSortie",
+						"2",
+						"annuler"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updateing the produit quatite",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/produits/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"produits",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BonSortie Validation avec la creation des mouvementsSortie et modification des Stocks",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gestionStock/api/v1/bonsSortie/4/valider",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gestionStock",
+						"api",
+						"v1",
+						"bonsSortie",
+						"4",
+						"valider"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

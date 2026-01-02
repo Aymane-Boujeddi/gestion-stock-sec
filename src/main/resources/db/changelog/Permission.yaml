@@ -1,0 +1,204 @@
+databaseChangeLog:
+  # Create permissions table
+  - changeSet:
+      id: create-permissions-table
+      author: security-team
+      changes:
+        - createTable:
+            tableName: permissions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+      rollback:
+        - dropTable:
+            tableName: permissions
+
+  # Insert all permissions
+  - changeSet:
+      id: insert-permissions
+      author: security-team
+      changes:
+        # User Management Permissions (Admin only)
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: USER_MANAGE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: ROLE_ASSIGN
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: PERMISSION_MANAGE
+
+        # Commande Permissions
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: COMMANDE_CREATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: COMMANDE_UPDATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: COMMANDE_READ
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: COMMANDE_VALIDATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: COMMANDE_CANCEL
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: COMMANDE_RECEPTION
+
+        # Bon de Sortie Permissions
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: BON_SORTIE_CREATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: BON_SORTIE_READ
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: BON_SORTIE_VALIDATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: BON_SORTIE_CANCEL
+
+        # Stock Permissions
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: STOCK_READ
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: STOCK_VIEW_FIFO
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: STOCK_VIEW_HISTORY
+
+        # Produit Permissions
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: PRODUIT_CREATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: PRODUIT_UPDATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: PRODUIT_DELETE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: PRODUIT_READ
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: PRODUIT_CONFIGURE_ALERT
+
+        # Fournisseur Permissions
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: FOURNISSEUR_CREATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: FOURNISSEUR_READ
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: FOURNISSEUR_UPDATE
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: FOURNISSEUR_DELETE
+
+        # Audit Permissions
+        - insert:
+            tableName: permissions
+            columns:
+              - column:
+                  name: name
+                  value: AUDIT_READ
+
+      rollback:
+        - delete:
+            tableName: permissions

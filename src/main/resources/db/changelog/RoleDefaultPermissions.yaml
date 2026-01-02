@@ -1,0 +1,524 @@
+databaseChangeLog:
+  # Create role_default_permissions join table
+  - changeSet:
+      id: create-role-default-permissions-table
+      author: security-team
+      changes:
+        - createTable:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: role_default_permissions
+            columnNames: role_id, permission_id
+            constraintName: pk_role_default_permissions
+        - addForeignKeyConstraint:
+            baseTableName: role_default_permissions
+            baseColumnNames: role_id
+            constraintName: fk_role_default_permissions_role
+            referencedTableName: role_apps
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: role_default_permissions
+            baseColumnNames: permission_id
+            constraintName: fk_role_default_permissions_permission
+            referencedTableName: permissions
+            referencedColumnNames: id
+            onDelete: CASCADE
+      rollback:
+        - dropTable:
+            tableName: role_default_permissions
+
+  # Insert default permissions for each role based on the permission matrix
+  - changeSet:
+      id: insert-role-default-permissions
+      author: security-team
+      changes:
+        # ========================================
+        # ADMIN - Full access to everything
+        # ========================================
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 1 # USER_MANAGE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 2 # ROLE_ASSIGN
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 3 # PERMISSION_MANAGE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 4 # COMMANDE_CREATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 5 # COMMANDE_UPDATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 6 # COMMANDE_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 7 # COMMANDE_VALIDATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 8 # COMMANDE_CANCEL
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 9 # COMMANDE_RECEPTION
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 10 # BON_SORTIE_CREATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 11 # BON_SORTIE_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 12 # BON_SORTIE_VALIDATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 13 # BON_SORTIE_CANCEL
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 14 # STOCK_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 15 # STOCK_VIEW_FIFO
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 16 # STOCK_VIEW_HISTORY
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 17 # PRODUIT_CREATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 18 # PRODUIT_UPDATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 19 # PRODUIT_DELETE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 20 # PRODUIT_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 21 # PRODUIT_CONFIGURE_ALERT
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 22 # FOURNISSEUR_CREATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 23 # FOURNISSEUR_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 24 # FOURNISSEUR_UPDATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 25 # FOURNISSEUR_DELETE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1 # ADMIN
+              - column:
+                  name: permission_id
+                  valueNumeric: 26 # AUDIT_READ
+
+        # ========================================
+        # RESPONSABLE_ACHAT - Purchase manager
+        # ========================================
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 4 # COMMANDE_CREATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 5 # COMMANDE_UPDATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 6 # COMMANDE_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 7 # COMMANDE_VALIDATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 8 # COMMANDE_CANCEL
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 14 # STOCK_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 15 # STOCK_VIEW_FIFO
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 20 # PRODUIT_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 21 # PRODUIT_CONFIGURE_ALERT
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 22 # FOURNISSEUR_CREATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 23 # FOURNISSEUR_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 4 # RESPONSABLE_ACHAT
+              - column:
+                  name: permission_id
+                  valueNumeric: 24 # FOURNISSEUR_UPDATE
+
+        # ========================================
+        # MAGASINIER - Warehouse manager
+        # ========================================
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2 # MAGASINIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 6 # COMMANDE_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2 # MAGASINIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 9 # COMMANDE_RECEPTION
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2 # MAGASINIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 10 # BON_SORTIE_CREATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2 # MAGASINIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 11 # BON_SORTIE_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2 # MAGASINIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 14 # STOCK_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2 # MAGASINIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 15 # STOCK_VIEW_FIFO
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2 # MAGASINIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 16 # STOCK_VIEW_HISTORY
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2 # MAGASINIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 20 # PRODUIT_READ
+
+        # ========================================
+        # CHEF_ATELIER - Workshop manager
+        # ========================================
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 3 # CHEF_ATELIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 11 # BON_SORTIE_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 3 # CHEF_ATELIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 12 # BON_SORTIE_VALIDATE
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 3 # CHEF_ATELIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 13 # BON_SORTIE_CANCEL
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 3 # CHEF_ATELIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 14 # STOCK_READ
+        - insert:
+            tableName: role_default_permissions
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 3 # CHEF_ATELIER
+              - column:
+                  name: permission_id
+                  valueNumeric: 20 # PRODUIT_READ
+
+      rollback:
+        - delete:
+            tableName: role_default_permissions
